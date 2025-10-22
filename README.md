@@ -90,21 +90,21 @@ These tools have built-in OpenSpec commands. Select the OpenSpec integration whe
 
 | Tool | Commands |
 |------|----------|
-| **Claude Code** | `/openspec:proposal`, `/openspec:apply`, `/openspec:archive` |
-| **CodeBuddy Code (CLI)** | `/openspec:proposal`, `/openspec:apply`, `/openspec:archive` (`.codebuddy/commands/`) — see [docs](https://www.codebuddy.ai/cli) |
-| **Cursor** | `/openspec-proposal`, `/openspec-apply`, `/openspec-archive` |
+| **Claude Code** | `/openspec:proposal`, `/openspec:apply`, `/openspec:archive`, `/openspec:modified` |
+| **CodeBuddy Code (CLI)** | `/openspec:proposal`, `/openspec:apply`, `/openspec:archive`, `/openspec:modified` (`.codebuddy/commands/`) — see [docs](https://www.codebuddy.ai/cli) |
+| **Cursor** | `/openspec-proposal`, `/openspec-apply`, `/openspec-archive`, `/openspec-modified` |
 | **Cline** | Rules in `.clinerules/` directory (`.clinerules/openspec-*.md`) |
-| **Factory Droid** | `/openspec-proposal`, `/openspec-apply`, `/openspec-archive` (`.factory/commands/`) |
-| **OpenCode** | `/openspec-proposal`, `/openspec-apply`, `/openspec-archive` |
-| **Kilo Code** | `/openspec-proposal.md`, `/openspec-apply.md`, `/openspec-archive.md` (`.kilocode/workflows/`) |
-| **Windsurf** | `/openspec-proposal`, `/openspec-apply`, `/openspec-archive` (`.windsurf/workflows/`) |
-| **Codex** | `/openspec-proposal`, `/openspec-apply`, `/openspec-archive` (global: `~/.codex/prompts`, auto-installed) |
-| **GitHub Copilot** | `/openspec-proposal`, `/openspec-apply`, `/openspec-archive` (`.github/prompts/`) |
-| **Amazon Q Developer** | `@openspec-proposal`, `@openspec-apply`, `@openspec-archive` (`.amazonq/prompts/`) |
-| **Auggie (Augment CLI)** | `/openspec-proposal`, `/openspec-apply`, `/openspec-archive` (`.augment/commands/`) |
+| **Factory Droid** | `/openspec-proposal`, `/openspec-apply`, `/openspec-archive`, `/openspec-modified` (`.factory/commands/`) |
+| **OpenCode** | `/openspec-proposal`, `/openspec-apply`, `/openspec-archive`, `/openspec-modified` |
+| **Kilo Code** | `/openspec-proposal.md`, `/openspec-apply.md`, `/openspec-archive.md`, `/openspec-modified.md` (`.kilocode/workflows/`) |
+| **Windsurf** | `/openspec-proposal`, `/openspec-apply`, `/openspec-archive`, `/openspec-modified` (`.windsurf/workflows/`) |
+| **Codex** | `/openspec-proposal`, `/openspec-apply`, `/openspec-archive`, `/openspec-modified` (global: `~/.codex/prompts`, auto-installed) |
+| **GitHub Copilot** | `/openspec-proposal`, `/openspec-apply`, `/openspec-archive`, `/openspec-modified` (`.github/prompts/`) |
+| **Amazon Q Developer** | `@openspec-proposal`, `@openspec-apply`, `@openspec-archive`, `@openspec-modified` (`.amazonq/prompts/`) |
+| **Auggie (Augment CLI)** | `/openspec-proposal`, `/openspec-apply`, `/openspec-archive`, `/openspec-modified` (`.augment/commands/`) |
 
 
-Kilo Code discovers team workflows automatically. Save the generated files under `.kilocode/workflows/` and trigger them from the command palette with `/openspec-proposal.md`, `/openspec-apply.md`, or `/openspec-archive.md`.
+Kilo Code discovers team workflows automatically. Save the generated files under `.kilocode/workflows/` and trigger them from the command palette with `/openspec-proposal.md`, `/openspec-apply.md`, `/openspec-archive.md`, or `/openspec-modified.md`.
 
 #### AGENTS.md Compatible
 These tools automatically read workflow instructions from `openspec/AGENTS.md`. Ask them to follow the OpenSpec workflow if they need a reminder. Learn more about the [AGENTS.md convention](https://agents.md/).
@@ -218,6 +218,30 @@ $ openspec archive add-profile-filters --yes  # Archive the completed change wit
 ```
 
 **Note:** Tools with native slash commands (Claude Code, CodeBuddy, Cursor, Codex) can use the shortcuts shown. All other tools work with natural language requests to "create an OpenSpec proposal", "apply the OpenSpec change", or "archive the change".
+
+### Modifying Existing Requirements
+
+When you need to modify an existing requirement in a spec, use the `modified` directive to ensure the change is made correctly:
+
+```text
+You: I need to modify the authentication requirement to add OAuth support
+     (Shortcut for tools with slash commands: /openspec:modified add-oauth-support auth)
+
+AI:  I'll help you modify the authentication requirement.
+     *Locates the existing requirement in openspec/specs/auth/spec.md*
+     *Copies the complete requirement to openspec/changes/add-oauth-support/specs/auth/spec.md*
+     *Adds the modification under ## MODIFIED Requirements*
+     *Updates tasks.md to include implementation steps*
+```
+
+The `modified` directive helps AI assistants:
+- Locate the existing requirement in the correct spec
+- Copy the entire requirement (avoiding partial updates that lose details)
+- Place it correctly under `## MODIFIED Requirements`
+- Update the requirement with your requested changes
+- Ensure the format is correct for archival
+
+This ensures that when you archive the change, the entire requirement is replaced correctly without losing any existing details.
 
 ## Command Reference
 
