@@ -1,4 +1,4 @@
-export type SlashCommandId = 'proposal' | 'apply' | 'archive';
+export type SlashCommandId = 'proposal' | 'apply' | 'archive' | 'modified';
 
 const baseGuardrails = `**Guardrails**
 - Favor straightforward, minimal implementations first and add complexity only when it is requested or clearly required.
@@ -47,10 +47,39 @@ const archiveReferences = `**Reference**
 - Use \`openspec list\` to confirm change IDs before archiving.
 - Inspect refreshed specs with \`openspec list --specs\` and address any validation issues before handing off.`;
 
+const modifiedGuardrails = `${baseGuardrails}\n- Always include the complete requirement when creating MODIFIED requirements—partial updates will lose existing details during archival.`;
+
+const modifiedSteps = `**Steps**
+1. Identify the target spec and requirement:
+   - If a specific change ID and requirement are mentioned, use those.
+   - Otherwise, run \`openspec list --specs\` to find available specs and \`openspec show <spec-id> --type spec\` to view requirements.
+   - Ask for clarification if the target is ambiguous.
+2. Locate the existing requirement in \`openspec/specs/<capability>/spec.md\`:
+   - Use \`openspec show <spec-id> --type spec\` or read the file directly.
+   - Identify the complete requirement block (from \`### Requirement: ...\` through all its scenarios).
+3. Create or update the change proposal:
+   - If no change exists, suggest creating one first with \`/openspec:proposal\`.
+   - If a change exists, verify it with \`openspec show <change-id>\`.
+4. Add the MODIFIED requirement to the appropriate delta file:
+   - Create or update \`openspec/changes/<change-id>/specs/<capability>/spec.md\`.
+   - Copy the entire existing requirement under \`## MODIFIED Requirements\`.
+   - Apply the requested modifications to the copied content.
+   - Ensure the requirement header matches exactly (whitespace-insensitive).
+   - Keep at least one \`#### Scenario:\` in the modified version.
+5. Update \`tasks.md\` to reflect the implementation work needed for this modification.
+6. Validate the change with \`openspec validate <change-id> --strict\` and resolve any issues.`;
+
+const modifiedReferences = `**Reference**
+- Use \`openspec show <spec-id> --type spec\` to view current requirements.
+- Use \`openspec show <change-id> --json --deltas-only\` to inspect existing deltas.
+- Review the MODIFIED requirements section in \`openspec/AGENTS.md\` for format details.
+- Remember: MODIFIED requirements must include the full, updated text—the archiver replaces the entire requirement.`;
+
 export const slashCommandBodies: Record<SlashCommandId, string> = {
   proposal: [proposalGuardrails, proposalSteps, proposalReferences].join('\n\n'),
   apply: [baseGuardrails, applySteps, applyReferences].join('\n\n'),
-  archive: [baseGuardrails, archiveSteps, archiveReferences].join('\n\n')
+  archive: [baseGuardrails, archiveSteps, archiveReferences].join('\n\n'),
+  modified: [modifiedGuardrails, modifiedSteps, modifiedReferences].join('\n\n')
 };
 
 export function getSlashCommandBody(id: SlashCommandId): string {

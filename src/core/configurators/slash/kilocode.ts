@@ -4,7 +4,8 @@ import { SlashCommandId } from "../../templates/index.js";
 const FILE_PATHS: Record<SlashCommandId, string> = {
   proposal: ".kilocode/workflows/openspec-proposal.md",
   apply: ".kilocode/workflows/openspec-apply.md",
-  archive: ".kilocode/workflows/openspec-archive.md"
+  archive: ".kilocode/workflows/openspec-archive.md",
+  modified: ".kilocode/workflows/openspec-modified.md"
 };
 
 export class KiloCodeSlashCommandConfigurator extends SlashCommandConfigurator {
