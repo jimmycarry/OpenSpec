@@ -4,7 +4,8 @@ import { SlashCommandId } from '../../templates/index.js';
 const FILE_PATHS: Record<SlashCommandId, string> = {
   proposal: '.windsurf/workflows/openspec-proposal.md',
   apply: '.windsurf/workflows/openspec-apply.md',
-  archive: '.windsurf/workflows/openspec-archive.md'
+  archive: '.windsurf/workflows/openspec-archive.md',
+  modified: '.windsurf/workflows/openspec-modified.md'
 };
 
 export class WindsurfSlashCommandConfigurator extends SlashCommandConfigurator {
@@ -19,7 +20,8 @@ export class WindsurfSlashCommandConfigurator extends SlashCommandConfigurator {
     const descriptions: Record<SlashCommandId, string> = {
       proposal: 'Scaffold a new OpenSpec change and validate strictly.',
       apply: 'Implement an approved OpenSpec change and keep tasks in sync.',
-      archive: 'Archive a deployed OpenSpec change and update specs.'
+      archive: 'Archive a deployed OpenSpec change and update specs.',
+      modified: 'Modify an existing requirement in a change proposal correctly.'
     };
     const description = descriptions[id];
     return `---\ndescription: ${description}\nauto_execution_mode: 3\n---`;

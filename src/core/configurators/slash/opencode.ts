@@ -7,6 +7,7 @@ const FILE_PATHS: Record<SlashCommandId, string> = {
   proposal: ".opencode/command/openspec-proposal.md",
   apply: ".opencode/command/openspec-apply.md",
   archive: ".opencode/command/openspec-archive.md",
+  modified: ".opencode/command/openspec-modified.md",
 };
 
 const FRONTMATTER: Record<SlashCommandId, string> = {
@@ -31,6 +32,10 @@ description: Archive a deployed OpenSpec change and update specs.
   $ARGUMENTS
 </ChangeId>
 `,
+  modified: `---
+agent: build
+description: Modify an existing requirement in a change proposal correctly.
+---`,
 };
 
 export class OpenCodeSlashCommandConfigurator extends SlashCommandConfigurator {

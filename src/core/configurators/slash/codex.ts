@@ -10,6 +10,7 @@ const FILE_PATHS: Record<SlashCommandId, string> = {
   proposal: ".codex/prompts/openspec-proposal.md",
   apply: ".codex/prompts/openspec-apply.md",
   archive: ".codex/prompts/openspec-archive.md",
+  modified: ".codex/prompts/openspec-modified.md",
 };
 
 export class CodexSlashCommandConfigurator extends SlashCommandConfigurator {
@@ -39,6 +40,12 @@ $ARGUMENTS`,
       archive: `---
 description: Archive a deployed OpenSpec change and update specs.
 argument-hint: change-id
+---
+
+$ARGUMENTS`,
+      modified: `---
+description: Modify an existing requirement in a change proposal correctly.
+argument-hint: change-id and requirement
 ---
 
 $ARGUMENTS`,

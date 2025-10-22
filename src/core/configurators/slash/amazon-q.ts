@@ -4,7 +4,8 @@ import { SlashCommandId } from '../../templates/index.js';
 const FILE_PATHS: Record<SlashCommandId, string> = {
   proposal: '.amazonq/prompts/openspec-proposal.md',
   apply: '.amazonq/prompts/openspec-apply.md',
-  archive: '.amazonq/prompts/openspec-archive.md'
+  archive: '.amazonq/prompts/openspec-archive.md',
+  modified: '.amazonq/prompts/openspec-modified.md'
 };
 
 const FRONTMATTER: Record<SlashCommandId, string> = {
@@ -34,7 +35,16 @@ The user wants to archive the following deployed change. Use the openspec instru
 
 <ChangeId>
   $ARGUMENTS
-</ChangeId>`
+</ChangeId>`,
+  modified: `---
+description: Modify an existing requirement in a change proposal correctly.
+---
+
+The user wants to modify an existing requirement. Use the openspec instructions to properly create a MODIFIED requirement.
+
+<UserRequest>
+  $ARGUMENTS
+</UserRequest>`
 };
 
 export class AmazonQSlashCommandConfigurator extends SlashCommandConfigurator {
